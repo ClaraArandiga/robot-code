@@ -1,27 +1,25 @@
 import wpilib
 import wpilib.drive
-import phoenix5
+import phoenix5  
+import rev       
 
-class TestRobot(wpilib.TimedRobot):
+class MyRobot(wpilib.TimedRobot):
     def robotInit(self):
-        self.left_front = phoenix5.WPI_VictorSPX(1)
-        self.left_back = phoenix5.WPI_VictorSPX(2)
-        self.right_front = phoenix5.WPI_VictorSPX(3)
-        self.right_back = phoenix5.WPI_VictorSPX(4)
-
-        self.left = wpilib.SpeedControllerGroup(self.left_front, self.left_back)
-        self.right = wpilib.SpeedControllerGroup(self.right_front, self.right_back)
-        self.right.setInverted(True)
         
-        self.drivetrain = wpilib.drive.DifferentialDrive(self.left, self.right)
-
-        self.joystick = wpilib.Joystick(0)
-
-    def teleopInit(self):
-        self.drivetrain.setSafetyEnabled(True)
-
-    def teleopPeriodic(self):
-        self.drivetrain.arcadeDrive(
-            -self.joystick.getRawAxis(1),
-            self.joystick.getRawAxis(0),
+        self.left_front_motor = phoenix5.WPI_TalonSRX(1)
+        self.left_rear_motor = rev.CANSparkMax(2, rev.MotorType.kBrushless)
+        self.right_front_motor = phoenix5.WPI_TalonSRX(3)
+        self.right_rear_motor = rev.CANSparkMax(4, rev.MotorType.kBrushless)
+        
+        self.robot_drive = wpilib.drive.DifferentialDrive(
+            wpilib.SpeedControllerGroup(self.left_front_motor, self.left_rear_motor),
+            wpilib.SpeedControllerGroup(self.right_front_motor, self.right_rear_motor)
         )
+        
+        self.joystick = wpilib.Joystick(0)
+    
+    def teleopPeriodic(self):
+        self.robot_drive.arcadeDrive(self.joystick.getY(), self.joystick.getX())
+
+if __name__ == "__main__":
+    wpilib.run(MyRobot)
