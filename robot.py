@@ -23,7 +23,10 @@ class TestRobot(wpilib.TimedRobot):
         self.joystick = wpilib.Joystick(0)
     
     def teleopPeriodic(self):
-        self.robot_drive.arcadeDrive(self.joystick.getY(), self.joystick.getX())
+        self.robot_drive.arcadeDrive(
+            foward = self.joystick.getRawAxis(5),
+            turn = self.joystick.getRawAxis(2)
+            )
 
         if self.joystick.getRawButtonPressed(1):
             self.climb_motor.set(1.0) 
