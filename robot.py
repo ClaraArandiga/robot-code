@@ -10,7 +10,7 @@ class TestRobot(wpilib.TimedRobot):
         self.right_front_motor = phoenix5.WPI_TalonSRX(3) 
         self.right_rear_motor = rev.CANSparkMax(4, rev.MotorType.kBrushless) 
 
-        self.left = wpilib.MotorControllerGroup(self.left_front_motor, self.left_rear_motor),
+        self.left = wpilib.MotorControllerGroup(self.left_front_motor, self.left_rear_motor)
         self.right = wpilib.MotorControllerGroup(self.right_front_motor, self.right_rear_motor)
 
 
@@ -23,10 +23,10 @@ class TestRobot(wpilib.TimedRobot):
         self.joystick = wpilib.Joystick(0)
     
     def teleopPeriodic(self):
-        self.robot_drive.arcadeDrive(
-            foward = self.joystick.getRawAxis(5),
-            turn = self.joystick.getRawAxis(2)
-            )
+        move_value = self.joystick.getRawAxis(5)
+        rotate_value = self.joystick.getRawAxis(2)
+        self.robot_drive.arcadeDrive(move_value, rotate_value)
+
 
         if self.joystick.getRawButtonPressed(1):
             self.climb_motor.set(1.0) 
