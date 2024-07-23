@@ -22,7 +22,7 @@ class TestRobot(wpilib.TimedRobot):
 
         self.joystick = wpilib.Joystick(0)
     
-    def teleopPeriodic(self):
+    def (self):
         move_value = self.joystick.getRawAxis(5)
         rotate_value = self.joystick.getRawAxis(2)
         self.robot_drive.arcadeDrive(move_value, rotate_value)
@@ -41,5 +41,5 @@ class TestRobot(wpilib.TimedRobot):
         # self.left.set(1)
         # self.right.set(-1)
 
-if __name__ == "__main__":
-    wpilib.run(TestRobot)
+# if __name__ == "__main__":
+    # wpilib.run(TestRobot)
