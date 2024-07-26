@@ -1,45 +1,38 @@
 import wpilib
 import wpilib.drive
 import phoenix5 
+from elevationSys import ClimbSys
 import rev       
 
 class TestRobot(wpilib.TimedRobot):
     def robotInit(self):
-        self.left_front_motor = phoenix5.WPI_TalonSRX(1) 
-        self.left_rear_motor = rev.CANSparkMax(2, rev.MotorType.kBrushless)  
-        self.right_front_motor = phoenix5.WPI_TalonSRX(3) 
-        self.right_rear_motor = rev.CANSparkMax(4, rev.MotorType.kBrushless) 
+        self.left_front_motor = phoenix5.WPI_VictorSPX(4) 
+        self.left_rear_motor = phoenix5.WPI_VictorSPX(1)  
+        self.right_front_motor = phoenix5.WPI_VictorSPX(8) 
+        self.right_rear_motor = phoenix5.WPI_VictorSPX(12) 
 
         self.left = wpilib.MotorControllerGroup(self.left_front_motor, self.left_rear_motor)
         self.right = wpilib.MotorControllerGroup(self.right_front_motor, self.right_rear_motor)
-
-
-        self.climb_motor = phoenix5.WPI_VictorSPX(5) 
 
         self.robot_drive = wpilib.drive.DifferentialDrive(
             self.left, self.right
         )
 
+        ClimbSys.init(self)
+
         self.joystick = wpilib.Joystick(0)
-    
     def teleopPeriodic(self):
-        move_value = self.joystick.getRawAxis(5)
-        rotate_value = self.joystick.getRawAxis(2)
+        move_value = self.joystick.getRawAxis(0)
+        rotate_value = self.joystick.getRawAxis(1)
         self.robot_drive.arcadeDrive(move_value, rotate_value)
 
-
-        if self.joystick.getRawButtonPressed(1):
-            self.climb_motor.set(1.0) 
-        elif self.joystick.getRawButtonReleased(1):
-            self.climb_motor.set(0.0) 
+        ClimbSys.teleop(self)
 
     def autonomousInit(self):
         pass
 
     def autonomousPeriodic(self):
         pass 
-        # self.left.set(1)
-        # self.right.set(-1)
 
-if __name__ == "__main__":
-    wpilib.run(TestRobot)
+# if _name_ == "_main_":
+    # wpilib.run(TestRobot)
