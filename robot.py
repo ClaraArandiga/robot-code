@@ -1,7 +1,7 @@
 import wpilib
 import wpilib.drive
 import phoenix5 
-from elevationSys import ClimbSys
+from elevationSys import climbSys
 import rev       
 
 class TestRobot(wpilib.TimedRobot):
@@ -18,7 +18,7 @@ class TestRobot(wpilib.TimedRobot):
             self.left, self.right
         )
 
-        ClimbSys.init(self)
+        climbSys.init(self)
 
         self.joystick = wpilib.Joystick(0)
     def teleopPeriodic(self):
@@ -26,7 +26,7 @@ class TestRobot(wpilib.TimedRobot):
         rotate_value = self.joystick.getRawAxis(1)
         self.robot_drive.arcadeDrive(move_value, rotate_value)
 
-        ClimbSys.teleop(self)
+        climbSys.teleop(self)
 
     def autonomousInit(self):
         pass
