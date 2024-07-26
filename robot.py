@@ -21,9 +21,10 @@ class TestRobot(wpilib.TimedRobot):
         climbSys.init(self)
 
         self.joystick = wpilib.Joystick(0)
+    
     def teleopPeriodic(self):
-        move_value = self.joystick.getRawAxis(0)
-        rotate_value = self.joystick.getRawAxis(1)
+        move_value = self.joystick.getRawAxis(5)
+        rotate_value = self.joystick.getRawAxis(2)
         self.robot_drive.arcadeDrive(move_value, rotate_value)
 
         climbSys.teleop(self)
