@@ -1,24 +1,26 @@
 import wpilib
 import wpilib.drive
 import phoenix5 
-from elevationSys import ClimbSys
+from ClimbSys import elevationSys
 import rev
 
 class TestRobot(wpilib.TimedRobot):
     def robotInit(self):
-        self.left_front_motor = phoenix5.WPI_VictorSPX(4) 
-        self.left_rear_motor = phoenix5.WPI_VictorSPX(1)  
-        self.right_front_motor = phoenix5.WPI_VictorSPX(8) 
-        self.right_rear_motor = phoenix5.WPI_VictorSPX(12) 
+        self.left_front_motor = rev.CANSparkMax(51, rev.MotorType.kBrushless)
+        self.left_rear_motor = rev.CANSparkMax(52, rev.MotorType.kBrushless)
+        self.right_front_motor = rev.CANSparkMax(54, rev.MotorType.kBrushless)
+        self.right_rear_motor = rev.CANSparkMax(53, rev.MotorType.kBrushless)
 
         self.left = wpilib.MotorControllerGroup(self.left_front_motor, self.left_rear_motor)
         self.right = wpilib.MotorControllerGroup(self.right_front_motor, self.right_rear_motor)
+
+        self.motors = wpilib.SpeedControllerGroup(self.left, self.right)
 
         self.robot_drive = wpilib.drive.DifferentialDrive(
             self.left, self.right
         )
 
-        ClimbSys.init(self)
+        elevationSys.init(self)
 
         self.joystick = wpilib.Joystick(0)
     
@@ -27,7 +29,7 @@ class TestRobot(wpilib.TimedRobot):
         rotate_value = self.joystick.getRawAxis(2)
         self.robot_drive.arcadeDrive(move_value, rotate_value)
 
-        ClimbSys.teleop(self)
+        elevationSys.teleop(self)
 
     def autonomousInit(self):
         pass
