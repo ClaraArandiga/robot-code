@@ -7,7 +7,7 @@ import rev
 class TestRobot(wpilib.TimedRobot):
     def robotInit(self):
         self.left_front_motor = rev.CANSparkMax(10, rev.CANSparkLowLevel.MotorType.kBrushless)
-        self.left_rear_motor = rev.CANSparkMax(53, rev.CANSparkLowLevel.MotorType.kBrushless)
+        self.left_rear_motor = rev.CANSparkMax(51, rev.CANSparkLowLevel.MotorType.kBrushless)
         self.right_front_motor = rev.CANSparkMax(8, rev.CANSparkLowLevel.MotorType.kBrushless)
         self.right_rear_motor = rev.CANSparkMax(7, rev.CANSparkLowLevel.MotorType.kBrushless)
 
